@@ -17,7 +17,7 @@ DEPS = evq.h
 all: demo
 
 demo: demo.c demo.o
-	@${CC} ${CC_ARGS} -o demo demo.c evq.h
+	@${CC} ${CC_ARGS} -o demo demo.c evq.h evq.c
 	
 clean:
 	@rm -f demo *.o
