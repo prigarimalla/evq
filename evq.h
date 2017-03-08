@@ -22,7 +22,7 @@ struct event_queue{
 	bool exec;
 };
 
-event_queue* init_evq();
+event_queue* init_evq(void);
 event_id add_event(event_queue* evq, branch_func f, error_func err_f, void* data);
 void remove_id(event_queue* evq, event_id id);
 void remove_event(event_queue* evq, branch_event* evt);
