@@ -1,8 +1,8 @@
-#ifndef _EVQ_H_
-#define _EVQ_H_
+#ifndef EVQ_H
+#define EVQ_H
 
-#include <stdbool.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct branch_event branch_event;
 typedef struct event_queue event_queue;
@@ -25,11 +25,9 @@ struct event_queue{
 	bool exec;
 };
 
-event_queue* init_evq(void);
-event_id add_event(event_queue* evq, branch_func f, error_func err_f, void* data);
-void remove_id(event_queue* evq, event_id id);
-void remove_event(event_queue* evq, branch_event* evt);
-branch_event* get_event_by_id(event_queue* evq, event_id id);
-void next(event_queue* evq);
+event_queue* evq_init(void);
+event_id evq_add(event_queue* evq, branch_func f, error_func err_f, void* data);
+void evq_remove(event_queue* evq, event_id id);
+void evq_next(event_queue* evq);
 
 #endif
