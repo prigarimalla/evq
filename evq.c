@@ -1,6 +1,6 @@
 #include "evq.h"
 
-event_queue* init_evq(){
+event_queue* evq_init(){
 	event_queue* evq = (event_queue*)malloc(sizeof(event_queue));
 	evq->start = NULL;
 	evq->next_id = 0;
@@ -8,7 +8,7 @@ event_queue* init_evq(){
 	return evq;
 }
 
-event_id add_event(event_queue* evq, branch_func f, error_func err_f, void* data){
+event_id evq_add(event_queue* evq, branch_func f, error_func err_f, void* data){
 	if(f == NULL || evq == NULL){
 		return -1;
 	}
@@ -23,7 +23,7 @@ event_id add_event(event_queue* evq, branch_func f, error_func err_f, void* data
 	return event->id;
 }
 
-void remove_id(event_queue* evq, event_id id){
+void evq_remove(event_queue* evq, event_id id){
 	if(evq->start->id == id){
 		branch_event* t = evq->start->next;
 		free(evq->start);
@@ -44,22 +44,7 @@ void remove_id(event_queue* evq, event_id id){
 	free(cur);
 }
 
-void remove_event(event_queue* evq, branch_event* evt){
-	remove_id(evq, evt->id);
-}
-
-branch_event* get_event_by_id(event_queue* evq, event_id id){
-	branch_event* cur = evq->start;
-	while(cur->id != id){
-		cur = cur->next;
-		if(cur->next == NULL){
-			break;
-		}
-	}
-	return cur;
-}
-
-void next(event_queue* evq){
+void evq_next(event_queue* evq){
 	evq->exec = true;
 	if(evq->current == NULL){
 		evq->current = evq->start;
@@ -76,7 +61,7 @@ void next(event_queue* evq){
 		if(evq->current->err_f != NULL){
 			evq->current->err_f(evq, evq->current);
 		}
-	
-	evq->current = next_event; 
+
+	evq->current = next_event;
 	evq->exec = false;
 }
