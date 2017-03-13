@@ -67,6 +67,16 @@ event_queue* evq_init(){
 	return evq;
 }
 
+void evq_done(event_queue* evq){
+	branch_event* t = evq->start;
+	while(t != NULL){
+		branch_event* n = t->next;
+		evq_remove(evq, t->id);
+		t = n;
+	}
+	free_evq(evq);
+}
+
 event_id evq_add(event_queue* evq, branch_func f, error_func err_f, void* data){
 	if(f == NULL || evq == NULL){
 		return -1;

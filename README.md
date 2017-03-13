@@ -36,3 +36,8 @@ Once we have some events in the queue we can start executing them with:
     void evq_next(event_queue* evq);
 ```
 Just specify an event queue and the next event in the queue will start, automatically branching to the error function if necessary.  
+
+When done with the queue, remove all the events and free the queue itself with:
+``` C
+    void evq_done(event_queue* evq);
+```

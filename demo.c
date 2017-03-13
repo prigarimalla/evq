@@ -89,5 +89,8 @@ int main(int argc, char const *argv[]){
 	}
 	printf("\n");
 
+	//When done with a queue remove all the events and free the queue in one step!
+	evq_done(q);
+
 	return 0;
 }
