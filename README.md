@@ -27,15 +27,31 @@ An event consists of
  - the error function if `f` returns false (`err_f`, *optional*)
  - a pointer to some arbitrary data that the event might need (`data`, *optional*)
 
-It returns an `event_id` that can be used to later delete the event with: 
+It returns an `event_id` that can be saved and used to later delete the event with: 
 ``` C
     void evq_remove(event_queue* evq, event_id id);
 ```
-Once we have some events in the queue we can start executing them with:
+Once we have some events in the queue we can start executing them one-by-one with:
 ``` C
     void evq_next(event_queue* evq);
 ```
 Just specify an event queue and the next event in the queue will start, automatically branching to the error function if necessary.  
+
+If we want to execute until we get to the front of the queue, we have:
+``` C
+    void evq_front(event_queue* evq);
+```
+Keep in mind, the intention of this function is only to get to the front of the queue. If we are already at the front of the queue, nothing will execute. 
+
+If we want to guarantee execution of every event in the queue, potentially executing some of them twice, and then return to the front of the queue, we can instead use:
+``` C
+    void evq_all(event_queue* evq);
+```
+
+To simply jump to the front of the queue **without** executing any events, use:
+``` C
+    void evq_reset(event_queue* evq);
+```
 
 When done with the queue, remove all the events and free the queue itself with:
 ``` C

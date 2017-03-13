@@ -96,6 +96,9 @@ void evq_remove(event_queue* evq, event_id id){
 	if(evq->start->id == id){
 		branch_event* t = evq->start->next;
 		free_branch_event(evq->start);
+		if(evq->start == evq->current && !evq->exec){
+			evq->current = t;
+		}
 		evq->start = t;
 		return;
 	}
@@ -133,4 +136,21 @@ void evq_next(event_queue* evq){
 
 	evq->current = next_event;
 	evq->exec = false;
+}
+
+void evq_front(event_queue* evq){
+	while(evq->current != evq->start){
+		evq_next(evq);
+	}
+}
+
+void evq_all(event_queue* evq){
+	evq_front(evq);
+	do{
+		evq_next(evq);
+	}while(evq->current != evq->start);
+}
+
+void evq_reset(event_queue* evq){
+	evq->current = evq->start;
 }

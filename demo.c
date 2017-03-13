@@ -51,7 +51,7 @@ int main(int argc, char const *argv[]){
 
 	int i = 0;
 	while(i<25){
-		//Repetedly call evq_next() on your queue to keep advancing exection
+		//Repeatedly call evq_next() on your queue to keep advancing execution
 		evq_next(q);
 		i++;
 	}
@@ -61,32 +61,37 @@ int main(int argc, char const *argv[]){
 	evq_remove(q, id);
 
 	//Look! No B
-	i=0;
-	while(i<25){
-		evq_next(q);
-		i++;
-	}
+	//Use this to execute every event once and wait stop at the front of the queue. 
+	evq_all(q);
 	printf("\n");
 
 	//Events can remove themselves during execution
 	evq_add(q, printAndErrorE, removeEPrintF, NULL);
 
 	//EF should be printed once then never again
-	i=0;
-	while(i<25){
-		evq_next(q);
-		i++;
-	}
+	evq_all(q);
 	printf("\n");
 
-	//Events can also be created with specific data relevent to that instance of an event
-	char* s = " hello world! ";
-	evq_add(q, printData, NULL, (void*)s);
-	i=0;
-	while(i<5){
-		evq_next(q);
-		i++;
-	}
+	//Events can also be created with specific data relevant to that instance of an event
+	char* s = " Hello World! ";
+	id = evq_add(q, printData, NULL, (void*)s);
+	evq_all(q);
+	printf("\n");
+	evq_remove(q, id);
+
+	//After some arbitrary execution such as...
+	evq_next(q);
+	evq_next(q);
+	//Use this to keep executing to the front of the queue
+	//(Note this will not execute all events and if already at the front nothing will execute)
+	evq_front(q);
+	printf("\n");
+
+	//To simply jump to the front WITHOUT executing, use evq_reset()
+	evq_next(q);
+	evq_next(q);
+	evq_reset(q); //Nothing is printed, but the now at start of queue
+	evq_next(q);
 	printf("\n");
 
 	//When done with a queue remove all the events and free the queue in one step!

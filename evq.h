@@ -44,5 +44,8 @@ void evq_done(event_queue* evq);
 event_id evq_add(event_queue* evq, branch_func f, error_func err_f, void* data);
 void evq_remove(event_queue* evq, event_id id);
 void evq_next(event_queue* evq);
+void evq_front(event_queue* evq);
+void evq_all(event_queue* evq);
+void evq_reset(event_queue* evq);
 
 #endif
