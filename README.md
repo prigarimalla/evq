@@ -48,6 +48,11 @@ If we want to guarantee execution of every event in the queue, potentially execu
     void evq_all(event_queue* evq);
 ```
 
+If we want to execute every function in the queue and return to the same position, we can use:
+``` C
+    void evq_round(event_queue* evq);
+```
+
 To simply jump to the front of the queue **without** executing any events, use:
 ``` C
     void evq_reset(event_queue* evq);

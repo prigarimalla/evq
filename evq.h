@@ -46,6 +46,7 @@ void evq_remove(event_queue* evq, event_id id);
 void evq_next(event_queue* evq);
 void evq_front(event_queue* evq);
 void evq_all(event_queue* evq);
+void evq_round(event_queue* evq);
 void evq_reset(event_queue* evq);
 
 #endif

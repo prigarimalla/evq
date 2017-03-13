@@ -87,6 +87,13 @@ int main(int argc, char const *argv[]){
 	evq_front(q);
 	printf("\n");
 
+	//Again, after some arbitrary execution such as...
+	evq_next(q);
+	printf("\n");
+	//To execute every event EXACTLY once, we can use evq_round()
+	evq_round(q);
+	printf("\n");
+
 	//To simply jump to the front WITHOUT executing, use evq_reset()
 	evq_next(q);
 	evq_next(q);

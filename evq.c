@@ -151,6 +151,13 @@ void evq_all(event_queue* evq){
 	}while(evq->current != evq->start);
 }
 
+void evq_round(event_queue* evq){
+	branch_event* t = evq->current;
+	do{
+		evq_next(evq);
+	}while(evq->current != t);
+}
+
 void evq_reset(event_queue* evq){
 	evq->current = evq->start;
 }
