@@ -5,7 +5,7 @@ CC_LIBS=
 CC_DEFINES=
 CC_INCLUDES=
 CC_ARGS=${CC_OPTS} ${CC_LIBS} ${CC_DEFINES} ${CC_INCLUDES}
-DEPS = evq.h
+DEPS = evq.h evq.c
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
