@@ -6,62 +6,62 @@ static branch_event* alloc_branch_event(void);
 static void free_branch_event(branch_event* evt);
 
 #ifdef EVQ_STATIC
-	static event_queue available_evq[EVQ_QUEUES];
-	static branch_event available_branch_event[EVQ_EVENTS];
+static event_queue available_evq[EVQ_QUEUES];
+static branch_event available_branch_event[EVQ_EVENTS];
 #endif
 
 static event_queue* alloc_evq(){
-	#ifdef EVQ_STATIC
-		event_queue* t;
-		int i;
-		for(i = 0; i < EVQ_QUEUES; i++){
-			if(!available_evq[i].in_use){
-				available_evq[i].in_use = true;
-				t = &(available_evq[i]);
-				break;
-			}
+#ifdef EVQ_STATIC
+	event_queue* t;
+	int i;
+	for(i = 0; i < EVQ_QUEUES; i++){
+		if(!available_evq[i].in_use){
+			available_evq[i].in_use = true;
+			t = &(available_evq[i]);
+			break;
 		}
-		return t;
-	#else
-		return (event_queue*)malloc(sizeof(event_queue));
-	#endif
+	}
+	return t;
+#else
+	return (event_queue*)malloc(sizeof(event_queue));
+#endif
 }
 
 static void free_evq(event_queue* evq){
-	#ifdef EVQ_STATIC
-		evq->in_use = false;
-	#else
-		if(evq != NULL){
-			free(evq);
-		}
-	#endif
+#ifdef EVQ_STATIC
+	evq->in_use = false;
+#else
+	if(evq != NULL){
+		free(evq);
+	}
+#endif
 }
 
 static branch_event* alloc_branch_event(void){
-	#ifdef EVQ_STATIC
-		branch_event* t;
-		int i;
-		for(i = 0; i < EVQ_EVENTS; i++){
-			if(!available_branch_event[i].in_use){
-				available_branch_event[i].in_use = true;
-				t = &(available_branch_event[i]);
-				break;
-			}
+#ifdef EVQ_STATIC
+	branch_event* t;
+	int i;
+	for(i = 0; i < EVQ_EVENTS; i++){
+		if(!available_branch_event[i].in_use){
+			available_branch_event[i].in_use = true;
+			t = &(available_branch_event[i]);
+			break;
 		}
-		return t;
-	#else
-		return (branch_event*)malloc(sizeof(branch_event));
-	#endif
+	}
+	return t;
+#else
+	return (branch_event*)malloc(sizeof(branch_event));
+#endif
 }
 
 static void free_branch_event(branch_event* evt){
-	#ifdef EVQ_STATIC
-		evt->in_use = false;
-	#else
-		if(evt != NULL){
-			free(evt);
-		}
-	#endif
+#ifdef EVQ_STATIC
+	evt->in_use = false;
+#else
+	if(evt != NULL){
+		free(evt);
+	}
+#endif
 }
 
 event_queue* evq_init(){
