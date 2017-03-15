@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-// #define STATIC
-// #define NUM_QUEUES 3
-// #define NUM_EVENTS 40
+// #define EVQ_STATIC
+// #define EVQ_QUEUES 3
+// #define EVQ_EVENTS 40
 
 typedef struct branch_event branch_event;
 typedef struct event_queue event_queue;
@@ -15,7 +15,7 @@ typedef void (*error_func)(event_queue*, branch_event*);
 typedef int event_id;
 
 struct branch_event{
-	#ifdef STATIC
+	#ifdef EVQ_STATIC
 		bool in_use;
 	#endif
 	event_id id;
@@ -26,7 +26,7 @@ struct branch_event{
 };
 
 struct event_queue{
-	#ifdef STATIC
+	#ifdef EVQ_STATIC
 		bool in_use;
 	#endif
 	branch_event* start;

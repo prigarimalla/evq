@@ -1,15 +1,15 @@
 #include "evq.h"
 
-#ifdef STATIC
-	static event_queue available_evq[NUM_QUEUES];
-	static branch_event available_branch_event[NUM_EVENTS]; 
+#ifdef EVQ_STATIC
+	static event_queue available_evq[EVQ_QUEUES];
+	static branch_event available_branch_event[EVQ_EVENTS];
 #endif
 
 static event_queue* alloc_evq(){
-	#ifdef STATIC
+	#ifdef EVQ_STATIC
 		event_queue* t;
 		int i;
-		for(i = 0; i < NUM_QUEUES; i++){
+		for(i = 0; i < EVQ_QUEUES; i++){
 			if(!available_evq[i].in_use){
 				available_evq[i].in_use = true;
 				t = &(available_evq[i]);
@@ -23,7 +23,7 @@ static event_queue* alloc_evq(){
 }
 
 static void free_evq(event_queue* evq){
-	#ifdef STATIC
+	#ifdef EVQ_STATIC
 		evq->in_use = false;
 	#else
 		if(evq != NULL){
@@ -33,10 +33,10 @@ static void free_evq(event_queue* evq){
 }
 
 static branch_event* alloc_branch_event(void){
-	#ifdef STATIC
+	#ifdef EVQ_STATIC
 		branch_event* t;
 		int i;
-		for(i = 0; i < NUM_EVENTS; i++){
+		for(i = 0; i < EVQ_EVENTS; i++){
 			if(!available_branch_event[i].in_use){
 				available_branch_event[i].in_use = true;
 				t = &(available_branch_event[i]);
@@ -50,7 +50,7 @@ static branch_event* alloc_branch_event(void){
 }
 
 static void free_branch_event(branch_event* evt){
-	#ifdef STATIC
+	#ifdef EVQ_STATIC
 		evt->in_use = false;
 	#else
 		if(evt != NULL){

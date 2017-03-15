@@ -2,12 +2,12 @@
 evq (short for **ev**ent **q**ueue) is an event queue intended for microcontroller applications. Several boolean functions can be added to the queue and repeatedly executed through just one function call, potentially branching to an error handler depending on the result before going to the next function in the queue. It supports both dynamic memory allocation or completely static allocation if desired. See `demo.c` for a fully commented example.
 
 ## Configuration
-In `evq.h` uncomment the following lines to use static memory allocation. Set `NUM_QUEUES` and `NUM_EVENTS` as necessary.
-(Keep in mind `NUM_EVENTS` is the amount of events simultaneously available to all queues)
+In `evq.h` uncomment the following lines to use static memory allocation. Set `EVQ_QUEUES` and `EVQ_EVENTS` as necessary.
+(Keep in mind `EVQ_EVENTS` is the amount of events simultaneously available to all queues)
 ``` C
-    #define STATIC
-    #define NUM_QUEUES 3
-    #define NUM_EVENTS 40
+    #define EVQ_STATIC
+    #define EVQ_QUEUES 3
+    #define EVQ_EVENTS 40
 ````
 ## Usage
 First, start out by initializing an event queue with the init function with:
