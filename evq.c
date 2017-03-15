@@ -1,5 +1,10 @@
 #include "evq.h"
 
+static event_queue* alloc_evq(void);
+static void free_evq(event_queue* evq);
+static branch_event* alloc_branch_event(void);
+static void free_branch_event(branch_event* evt);
+
 #ifdef EVQ_STATIC
 	static event_queue available_evq[EVQ_QUEUES];
 	static branch_event available_branch_event[EVQ_EVENTS];
